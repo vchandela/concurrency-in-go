@@ -35,6 +35,11 @@ func (g *Game) Layout(_, _ int) (w, h int) {
 }
 
 func main() {
+	for i, row := range utils.BoidMap {
+		for j := range row {
+			utils.BoidMap[i][j] = -1
+		}
+	}
 	for i := 0; i < constants.BoidCount; i++ {
 		utils.CreateBoid(i)
 	}
