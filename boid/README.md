@@ -3,6 +3,13 @@
 - As part of the Udemy course: [Mastering Multithreading Programming with Go (Golang)](https://www.udemy.com/course/multithreading-in-go-lang/)
 - This code uses [Ebiten](https://pkg.go.dev/github.co, m/hajimehoshi/ebiten/v2) -- a 2D game library in Golang
 
+### Step-by-step simulation
+- Step-1: Use goroutines are each boid
+<img src="./images/goroutine.png"  width="600" height="300">
+
+- Step-2: Converge boids together by changing velocity to avg velocity of neighbors
+<img src="./images/clustering.png"  width="600" height="300">
+
 ### Key Concepts
 
 - Function type declaration: Add(v1, v2 Vector) cleaner than Add(v1 Vector, v2 Vector)
