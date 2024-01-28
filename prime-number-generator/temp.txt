@@ -1,0 +1,131 @@
+Starting: print_prime
+Trying to acquire: sem_find
+Starting: find_prime
+Found:  2
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  2
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  3
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  3
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  5
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  5
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  7
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  7
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  11
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  11
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  13
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  13
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  17
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  17
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  19
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  19
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  23
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  23
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  29
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  29
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  31
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  31
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  37
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  37
+Trying to release: sem_print
+Released: sem_print
+Trying to acquire: sem_find
+Acquired: sem_print
+Found:  41
+Trying to release: sem_find
+Released: sem_find
+Trying to acquire: sem_print
+Acquired: sem_find
+Print:  41
+Trying to release: sem_print
+Released: sem_print
