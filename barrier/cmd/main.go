@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func waitOnBarrier(threadName string, timeToSleep int, barrier *utils.Barrier) {
+func waitOnBarrier(threadName string, timeToSleep int, barrier utils.Barrier) {
 	for {
 		fmt.Println(threadName, "running")
 		time.Sleep(time.Duration(timeToSleep) * time.Second)
