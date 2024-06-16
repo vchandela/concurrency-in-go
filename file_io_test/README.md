@@ -1,8 +1,14 @@
 ## IO Test
+- Program to test file I/O using different combinations of Batch Size (`max_poll_records`), Channel Size (`channel_size`) and Goroutine Workers (`num_workers`).
+- Flow:
+  - We fetch records from a file in a batch of size `max_poll_records`.
+  - Put these records one by one into a channel of size `channel_size`
+  - `num_workers` goroutines will process the records for 2 ms each.
 
 ### Observation
 1. Keeping Batch size and Channel size same, time taken by program decreases as Goroutine Workers increases.
 2. No noticeable change in time taken if Batch size = Channel size = 1024/2048/4096 keeping Goroutine Workers constant.
+3. No noticeable change on tuning GOMAXPROCS.
 
 | Total records | Batch Size | Channel Size | Goroutine Workers | ns/op       | ms/op    |
 |---------------|------------|--------------|-------------------|-------------|----------|
