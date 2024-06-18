@@ -2,17 +2,54 @@ package main
 
 import (
 	"bufio"
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
-	"file_io_test/constants"
+	"log"
 	"os"
 	"runtime"
 	"sync"
 	"time"
+
+	"file_io_test/utils"
+
+	"github.com/sourcegraph/conc/pool"
 )
 
 type txtLine struct {
 	id  int
 	txt string
+}
+
+// GenerateRandomString generates a random string of the specified length
+func GenerateRandomString(n int) (string, error) {
+	b := make([]byte, n)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
+	}
+	return base64.URLEncoding.EncodeToString(b)[:n], nil
+}
+
+func generate_string() {
+	file, err := os.Create("../temp100K.txt")
+	if err != nil {
+		log.Fatalf("failed to create file: %s", err)
+	}
+	defer file.Close()
+
+	for i := 0; i < 100000; i++ {
+		randomString, err := GenerateRandomString(16) // Each string is 16 characters long
+		if err != nil {
+			log.Fatalf("failed to generate random string: %s", err)
+		}
+
+		_, err = file.WriteString(randomString + "\n")
+		if err != nil {
+			log.Fatalf("failed to write to file: %s", err)
+		}
+	}
+
+	fmt.Println("Random strings generated and written to temp100K.txt")
 }
 
 func pollRecords(reader *bufio.Reader, max_poll_records int) []txtLine {
@@ -36,7 +73,7 @@ func ioTest(max_poll_records, channel_size, num_workers int) {
 	// fmt.Println("Number of CPUs:", numCPU)
 
 	// Set GOMAXPROCS to the desired value
-	runtime.GOMAXPROCS(8)
+	runtime.GOMAXPROCS(4)
 	// fmt.Println("GOMAXPROCS is set to:", runtime.GOMAXPROCS(0)) // Passing 0 returns the current value
 
 	tasks := make(chan txtLine, channel_size)
@@ -55,7 +92,7 @@ func ioTest(max_poll_records, channel_size, num_workers int) {
 		}(i, &wg)
 	}
 
-	file, err := os.Open("../temp.txt")
+	file, err := os.Open("../temp100K.txt")
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return
@@ -80,6 +117,68 @@ func ioTest(max_poll_records, channel_size, num_workers int) {
 
 }
 
+func ioTest2(max_poll_records int) {
+	// Set GOMAXPROCS to the desired value
+	runtime.GOMAXPROCS(4)
+
+	concurrency := utils.GetCurrentProcessConc()
+	fmt.Println("Concurrency:", concurrency)
+	pl := pool.New().WithMaxGoroutines(concurrency)
+
+	file, err := os.Open("../temp100K.txt")
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return
+	}
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+
+	for {
+		fetches := pollRecords(reader, max_poll_records)
+		
+		if len(fetches) == 0 {
+			break
+		}
+		for range fetches {
+			pl.Go(func() {
+				time.Sleep(2 * time.Millisecond)
+			})
+		}
+	}
+
+}
+
+func ioTest3(max_poll_records, num_workers int) {
+	// Set GOMAXPROCS to the desired value
+	runtime.GOMAXPROCS(4)
+
+	pl := pool.New().WithMaxGoroutines(num_workers)
+
+	file, err := os.Open("../temp100K.txt")
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return
+	}
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+
+	for {
+		fetches := pollRecords(reader, max_poll_records)
+		if len(fetches) == 0 {
+			break
+		}
+		for range fetches {
+			pl.Go(func() {
+				time.Sleep(2 * time.Millisecond)
+			})
+		}
+	}
+
+}
+
 func main() {
-	ioTest(constants.MAX_POLL_RECORDS, constants.MAX_POLL_RECORDS, constants.NUM_WORKERS)
+	// ioTest(constants.MAX_POLL_RECORDS, constants.MAX_POLL_RECORDS, constants.NUM_WORKERS)
+	generate_string()
 }
